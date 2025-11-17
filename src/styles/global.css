@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-lg bg-white/70 border border-white/20 rounded-2xl shadow-xl transition-all duration-500 hover:shadow-2xl hover:bg-white/75;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
+  }
+  
+  .gradient-text-light {
+    @apply bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent;
+  }
+  
+  .text-white-bright {
+    @apply text-white drop-shadow-lg;
+  }
+  
+  .hero-gradient {
+    @apply bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500;
+  }
+  
+  .button-gradient {
+    @apply bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg;
+  }
+  
+  .form-button {
+    @apply bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-500 hover:from-primary-500 hover:via-secondary-500 hover:to-secondary-600 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-xl focus:outline-none focus:ring-4 focus:ring-primary-500/40 active:scale-95 relative overflow-hidden;
+  }
+  
+  .form-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .form-button:hover::before {
+    left: 100%;
+  }
+  
+  .input-glass {
+    @apply backdrop-blur-sm bg-white/60 border-2 border-white/40 rounded-xl px-5 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-primary-500/30 focus:border-primary-500 transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-white/70 transform focus:scale-105;
+  }
+  
+  .book-card {
+    @apply glass-card p-6 hover:scale-105 transition-all duration-300 cursor-pointer;
+  }
+  
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  .aurora-bg {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: aurora 15s ease infinite;
+  }
+  
+  @keyframes aurora {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}

@@ -1,0 +1,203 @@
+---
+import Layout from  '../layouts/Layout.astro';
+import { Book, User, Calendar, BarChart3, LogOut, PlusCircle, Settings, Star } from 'lucide-astro';
+---
+
+<Layout title="Panel de Control - Biblioteca Digital">
+  <div class="min-h-screen flex">
+    <!-- Sidebar -->
+    <div class="w-64 bg-gradient-to-b from-slate-900/90 to-slate-800/90 backdrop-blur-lg border-r border-white/10">
+      <div class="p-6">
+        <div class="flex items-center space-x-3 mb-8">
+          <div class="w-12 h-12 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
+            <User size={24} class="text-white" />
+          </div>
+          <div>
+            <h3 class="text-white font-semibold" id="user-name-sidebar">Cargando...</h3>
+            <p class="text-gray-300 text-sm" id="user-email-sidebar">-</p>
+          </div>
+        </div>
+        
+        <nav class="space-y-2">
+          <a href="#" class="flex items-center space-x-3 text-white bg-white/10 rounded-lg p-3 hover:bg-white/20 transition-colors">
+            <BarChart3 size={20} />
+            <span>Dashboard</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg p-3 transition-colors">
+            <Book size={20} />
+            <span>Mis Libros</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg p-3 transition-colors">
+            <Calendar size={20} />
+            <span>Reservas</span>
+          </a>
+          <div id="admin-menu" class="hidden">
+          <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg p-3 transition-colors">
+            <PlusCircle size={20} />
+            <span>Gestionar Libros</span>
+          </a>
+          <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg p-3 transition-colors">
+            <User size={20} />
+            <span>Gestionar Usuarios</span>
+          </a>
+        </div>
+        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg p-3 transition-colors">
+          <Settings size={20} />
+          <span>Configuración</span>
+        </a>
+        </nav>
+      </div>
+      
+      <div class="absolute bottom-0 w-64 p-6">
+        <button id="logout-btn" class="flex items-center space-x-3 text-gray-300 hover:text-red-400 w-full p-3 rounded-lg hover:bg-red-500/10 transition-colors">
+          <LogOut size={20} />
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8">
+      <div class="mb-8">
+        <h1 class="text-4xl font-display font-bold text-white mb-2">Panel de Control</h1>
+        <p class="text-gray-300">Bienvenido de vuelta, <span id="welcome-name">Usuario</span></p>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="glass-card p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-300 text-sm">Libros Leídos</p>
+              <p class="text-3xl font-bold text-white">12</p>
+            </div>
+            <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <Book size={24} class="text-blue-400" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-300 text-sm">Reservas Activas</p>
+              <p class="text-3xl font-bold text-white">3</p>
+            </div>
+            <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+              <Calendar size={24} class="text-green-400" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-300 text-sm">Días de Lectura</p>
+              <p class="text-3xl font-bold text-white">45</p>
+            </div>
+            <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+              <Calendar size={24} class="text-purple-400" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-300 text-sm">Puntos de Recompensa</p>
+              <p class="text-3xl font-bold text-white">250</p>
+            </div>
+            <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+              <Star size={24} class="text-yellow-400" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Books -->
+      <div class="glass-card p-6">
+        <h2 class="text-2xl font-semibold text-white mb-6">Libros Recientes</h2>
+        <div class="space-y-4">
+          <div class="flex items-center space-x-4 p-4 bg-white/5 rounded-lg">
+            <div class="w-12 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded"></div>
+            <div class="flex-1">
+              <h3 class="text-white font-medium">Cien Años de Soledad</h3>
+              <p class="text-gray-300 text-sm">Gabriel García Márquez</p>
+            </div>
+            <span class="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm">Disponible</span>
+          </div>
+          
+          <div class="flex items-center space-x-4 p-4 bg-white/5 rounded-lg">
+            <div class="w-12 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded"></div>
+            <div class="flex-1">
+              <h3 class="text-white font-medium">1984</h3>
+              <p class="text-gray-300 text-sm">George Orwell</p>
+            </div>
+            <span class="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-sm">Reservado</span>
+          </div>
+          
+          <div class="flex items-center space-x-4 p-4 bg-white/5 rounded-lg">
+            <div class="w-12 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded"></div>
+            <div class="flex-1">
+              <h3 class="text-white font-medium">Don Quijote de la Mancha</h3>
+              <p class="text-gray-300 text-sm">Miguel de Cervantes</p>
+            </div>
+            <span class="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm">Disponible</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Check authentication and update UI
+  function checkAuth() {
+    const token = localStorage.getItem('token');
+    const userStr = localStorage.getItem('user');
+    
+    if (!token || !userStr) {
+      window.location.href = '/login';
+      return;
+    }
+    
+    try {
+      const user = JSON.parse(userStr);
+      
+      // Update user info
+      const userNameSidebar = document.getElementById('user-name-sidebar');
+      if (userNameSidebar) userNameSidebar.textContent = user.nombre;
+
+      const userEmailSidebar = document.getElementById('user-email-sidebar');
+      if (userEmailSidebar) userEmailSidebar.textContent = user.correo;
+
+      const welcomeName = document.getElementById('welcome-name');
+      if (welcomeName) welcomeName.textContent = user.nombre;
+
+      
+      // Show admin menu if user is admin
+      if (user.rol && user.rol.includes('administrador')) {
+        const adminMenu = document.getElementById('admin-menu');
+        if (adminMenu) {
+          adminMenu.classList.remove('hidden');
+        }
+      }
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+      window.location.href = '/login';
+    }
+  }
+  
+  // Logout functionality
+  function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/';
+  }
+  
+  // Initialize
+  document.addEventListener('DOMContentLoaded', checkAuth);
+  
+  // Add logout event listener
+  document.getElementById('logout-btn')?.addEventListener('click', logout);
+</script>

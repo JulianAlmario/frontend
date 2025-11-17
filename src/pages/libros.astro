@@ -1,0 +1,461 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Book, Search, Filter, Star, Calendar } from 'lucide-astro';
+
+const books = [
+  {
+    _id: "1",
+    titulo: "Cien Años de Soledad",
+    autor: "Gabriel García Márquez",
+    genero: "Realismo Mágico",
+    editorial: "Sudamericana",
+    fechaPublicacion: "1967",
+    cantidad: 5,
+    disponible: 3,
+    rating: 4.8,
+    cover: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Magical%20realism%20book%20cover%20with%20vibrant%20colors%20tropical%20elements%20mystical%20atmosphere&image_size=portrait_4_3"
+  },
+  {
+    _id: "2",
+    titulo: "1984",
+    autor: "George Orwell",
+    genero: "Distopía",
+    editorial: "Secker & Warburg",
+    fechaPublicacion: "1949",
+    cantidad: 8,
+    disponible: 5,
+    rating: 4.7,
+    cover: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Dystopian%20book%20cover%20dark%20futuristic%20minimalist%20design%20big%20brother%20theme&image_size=portrait_4_3"
+  },
+  {
+    _id: "3",
+    titulo: "Don Quijote de la Mancha",
+    autor: "Miguel de Cervantes",
+    genero: "Clásico",
+    editorial: "Juan de la Cuesta",
+    fechaPublicacion: "1605",
+    cantidad: 3,
+    disponible: 2,
+    rating: 4.9,
+    cover: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Classic%20Spanish%20literature%20book%20cover%20knight%20windmill%20vintage%20style&image_size=portrait_4_3"
+  },
+  {
+    _id: "4",
+    titulo: "La Sombra del Viento",
+    autor: "Carlos Ruiz Zafón",
+    genero: "Misterio",
+    editorial: "Planeta",
+    fechaPublicacion: "2001",
+    cantidad: 6,
+    disponible: 4,
+    rating: 4.6,
+    cover: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Mysterious%20gothic%20book%20cover%20Barcelona%20cemetery%20foggy%20atmospheric&image_size=portrait_4_3"
+  },
+  {
+    _id: "5",
+    titulo: "El Alquimista",
+    autor: "Paulo Coelho",
+    genero: "Ficción Filosófica",
+    editorial: "Rocco",
+    fechaPublicacion: "1988",
+    cantidad: 10,
+    disponible: 6,
+    rating: 4.5,
+    cover: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Philosophical%20fiction%20book%20cover%20desert%20pyramids%20journey%20spiritual&image_size=portrait_4_3"
+  },
+  {
+    _id: "6",
+    titulo: "Rayuela",
+    autor: "Julio Cortázar",
+    genero: "Literatura Experimental",
+    editorial: "Sudamericana",
+    fechaPublicacion: "1963",
+    cantidad: 2,
+    disponible: 1,
+    rating: 4.4,
+    cover: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Experimental%20literature%20book%20cover%20abstract%20surreal%20artistic%20design&image_size=portrait_4_3"
+  },
+  {
+    _id: "7",
+    titulo: "Ficciones",
+    autor: "Jorge Luis Borges",
+    genero: "Cuento",
+    editorial: "Sur",
+    fechaPublicacion: "1944",
+    cantidad: 4,
+    disponible: 3,
+    rating: 4.8,
+    cover: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Surreal%20book%20cover%20labyrinth%20infinity%20library%20mystical%20design&image_size=portrait_4_3"
+  },
+  {
+    _id: "8",
+    titulo: "La Casa de los Espíritus",
+    autor: "Isabel Allende",
+    genero: "Realismo Mágico",
+    editorial: "Plaza & Janés",
+    fechaPublicacion: "1982",
+    cantidad: 7,
+    disponible: 5,
+    rating: 4.6,
+    cover: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Magical%20realism%20book%20cover%20family%20saga%20mystical%20house%20spiritual&image_size=portrait_4_3"
+  }
+];
+
+const genres = ["Todos", "Realismo Mágico", "Distopía", "Clásico", "Misterio", "Ficción Filosófica", "Literatura Experimental", "Cuento"];
+---
+
+<Layout title="Catálogo de Libros - Biblioteca Digital">
+  <div class="py-20 px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-5xl md:text-6xl font-display font-bold text-white mb-4">
+          Catálogo de Libros
+        </h1>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+          Explora nuestra colección completa de libros disponibles para reserva
+        </p>
+      </div>
+
+      <!-- Search and Filter Section -->
+      <div class="glass-card p-6 mb-8">
+        <div class="flex flex-col md:flex-row gap-4">
+          <div class="flex-1 relative">
+            <Search class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={24} />
+            <input 
+              type="text" 
+              id="searchInput"
+              placeholder="Buscar por título, autor o género..." 
+              class="input-glass rounded-md w-full pl-12 pr-4 py-3 text-lg"
+            />
+            <button 
+              id="clearSearch"
+              class=" absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors hidden"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+          <div class="relative">
+            <button 
+              id="filterToggle"
+              class="bg-slate-900/90 text-gray-300 rounded-lg form-button px-6 py-3 flex items-center space-x-2 min-w-[120px]"
+            >
+              <Filter size={20} />
+              <span>Filtrar</span>
+              <svg class="w-4 h-4 ml-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            
+            <!-- Advanced Filter Dropdown -->
+            <div id="filterDropdown" class="bg-slate-900/90 absolute right-0 top-full mt-2 w-80 glass-card p-4 hidden z-10">
+              <h3 class="text-white font-semibold mb-4">Filtros Avanzados</h3>
+              
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-gray-300 text-sm mb-2">Género</label>
+                  <select id="genreFilter" class="input-glass w-full">
+                    <option value="">Todos los géneros</option>
+                    {genres.slice(1).map((genre) => (
+                      <option value={genre}>{genre}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-gray-300 text-sm mb-2">Disponibilidad</label>
+                  <div class="flex space-x-2">
+                    <button class="filter-availability flex-1 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm transition-colors" data-available="true">
+                      Disponible
+                    </button>
+                    <button class="filter-availability flex-1 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-3 py-2 rounded-lg text-sm transition-colors" data-available="false">
+                      Todos
+                    </button>
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-gray-300 text-sm mb-2">Calificación mínima</label>
+                  <div class="flex items-center space-x-2">
+                    <input type="range" id="ratingFilter" min="0" max="5" step="0.5" value="0" class="flex-1">
+                    <span id="ratingValue" class="text-white text-sm min-w-[3rem]">0+</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex space-x-2 mt-4">
+                <button id="applyFilters" class="form-button flex-1 py-2 text-sm">
+                  Aplicar
+                </button>
+                <button id="clearFilters" class="bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                  Limpiar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Genre Filter Pills -->
+        <div class="flex flex-wrap gap-2 mt-4">
+          {genres.slice(0, 6).map((genre) => (
+            <button 
+              class="quick-filter bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-4 py-2 rounded-full text-sm transition-colors"
+              data-genre={genre}
+            >
+              {genre}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Books Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {books.map((book) => (
+          <div class="book-card group hover:scale-105 transition-all duration-300">
+            <div class="relative overflow-hidden rounded-xl mb-4">
+              <img 
+                src={book.cover} 
+                alt={book.titulo}
+                class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            
+            <div class="space-y-3">
+              <h3 class="text-lg font-semibold text-white group-hover:text-primary-300 transition-colors line-clamp-2">
+                {book.titulo}
+              </h3>
+              <p class="text-gray-300 text-sm">{book.autor}</p>
+              <p class="text-gray-400 text-xs">{book.editorial} • {book.fechaPublicacion}</p>
+              
+              <div class="flex items-center justify-between">
+                <span class="bg-primary-500/20 text-primary-300 px-2 py-1 rounded-full text-xs font-medium">
+                  {book.genero}
+                </span>
+                <div class="flex items-center space-x-1">
+                  <Star class="text-yellow-400 fill-current" size={14} />
+                  <span class="text-white text-sm">{book.rating}</span>
+                </div>
+              </div>
+              
+              <div class="flex items-center justify-between pt-2 border-t border-white/10">
+                <div class="flex items-center space-x-2">
+                  <Calendar class="text-green-400" size={14} />
+                  <span class="text-green-400 text-xs">{book.disponible}/{book.cantidad}</span>
+                </div>
+                <button class="bg-gradient-to-r from-secondary-500 to-accent-500 hover:from-secondary-600 hover:to-accent-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105">
+                  Reservar
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center mt-12">
+        <div class="flex items-center space-x-2">
+          <button class="bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-colors">
+            Anterior
+          </button>
+          <button class="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-4 py-2 rounded-lg">
+            1
+          </button>
+          <button class="bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-colors">
+            2
+          </button>
+          <button class="bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-colors">
+            3
+          </button>
+          <button class="bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-colors">
+            Siguiente
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Search functionality
+  const searchInput = document.getElementById('searchInput');
+  const clearSearch = document.getElementById('clearSearch');
+  const filterToggle = document.getElementById('filterToggle');
+  const filterDropdown = document.getElementById('filterDropdown');
+  const ratingFilter = document.getElementById('ratingFilter');
+  const ratingValue = document.getElementById('ratingValue');
+  const applyFilters = document.getElementById('applyFilters');
+  const clearFilters = document.getElementById('clearFilters');
+  const quickFilters = document.querySelectorAll('.quick-filter');
+  const availabilityFilters = document.querySelectorAll('.filter-availability');
+
+  // Show/hide clear search button
+  searchInput?.addEventListener('input', function() {
+    if ((this as HTMLInputElement).value.length > 0) {
+      clearSearch?.classList.remove('hidden');
+    } else {
+      clearSearch?.classList.add('hidden');
+    }
+    // Filter books based on search
+    filterBooks();
+  });
+
+  // Clear search
+  clearSearch?.addEventListener('click', function() {
+    (searchInput as HTMLInputElement).value = '';
+    this.classList.add('hidden');
+    filterBooks();
+  });
+
+  // Toggle filter dropdown
+  filterToggle?.addEventListener('click', function(e) {
+    e.stopPropagation();
+    filterDropdown?.classList.toggle('hidden');
+    const arrow = this.querySelector('svg');
+    arrow?.classList.toggle('rotate-180');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!filterDropdown?.contains(e.target as Node) && e.target !== filterToggle) {
+      filterDropdown?.classList.add('hidden');
+      const arrow = filterToggle?.querySelector('svg');
+      arrow?.classList.remove('rotate-180');
+    }
+  });
+
+  // Rating filter
+  ratingFilter?.addEventListener('input', function() {
+    if (ratingValue) ratingValue.textContent = (this as HTMLInputElement).value + '+';
+  });
+
+  // Quick genre filters
+  quickFilters.forEach(button => {
+    button.addEventListener('click', function(this: HTMLButtonElement) {
+      const genre = (this as HTMLButtonElement).dataset.genre;
+      if (genre === 'Todos') {
+        // Reset genre filter
+        const genreFilterEl = document.getElementById('genreFilter');
+        if (genreFilterEl) (genreFilterEl as HTMLSelectElement).value = '';
+      } else {
+        // Set genre filter
+        const genreFilterEl = document.getElementById('genreFilter');
+if (genreFilterEl) (genreFilterEl as HTMLSelectElement).value = genre || '';
+      }
+      filterBooks();
+      
+      // Update active state
+      quickFilters.forEach(btn => btn.classList.remove('bg-primary-500/30', 'text-primary-300'));
+      (this as HTMLButtonElement).classList.add('bg-primary-500/30', 'text-primary-300');
+
+    });
+  });
+
+  // Availability filters
+  availabilityFilters.forEach(button => {
+    button.addEventListener('click', function(this: HTMLButtonElement) {
+      availabilityFilters.forEach((btn) => (btn as HTMLButtonElement).classList.remove('bg-primary-500/30', 'text-primary-300'));
+      this.classList.add('bg-primary-500/30', 'text-primary-300');
+      filterBooks();
+    });
+  });
+
+  // Apply filters
+  applyFilters?.addEventListener('click', function() {
+    filterBooks();
+    filterDropdown?.classList.add('hidden');
+    const arrow = filterToggle?.querySelector('svg');
+    arrow?.classList.remove('rotate-180');
+  });
+
+  // Clear filters
+  clearFilters?.addEventListener('click', function() {
+    const genreFilterEl = document.getElementById('genreFilter');
+    if (genreFilterEl) (genreFilterEl as HTMLSelectElement).value = '';
+    if (ratingFilter) (ratingFilter as HTMLInputElement).value = '0';
+    if (ratingValue) (ratingValue as HTMLElement).textContent = '0+';
+    availabilityFilters.forEach(btn => btn.classList.remove('bg-primary-500/30', 'text-primary-300'));
+    availabilityFilters[1]?.classList.add('bg-primary-500/30', 'text-primary-300'); // Select "Todos"
+    filterBooks();
+  });
+
+  // Filter books function
+  function filterBooks() {
+    const searchTerm = (searchInput as HTMLInputElement)?.value.toLowerCase() || '';
+    const selectedGenre = (document.getElementById('genreFilter') as HTMLSelectElement)?.value || null;
+    const minRating = parseFloat((ratingFilter as HTMLInputElement)?.value || '0') || 0;
+    
+    // Get availability filter state
+    let onlyAvailable = false;
+    availabilityFilters.forEach(button => {
+      if (button.classList.contains('bg-primary-500') && (button as HTMLElement).dataset.available === 'true') {
+        onlyAvailable = true;
+      }
+    });
+
+    const bookCards = document.querySelectorAll('.book-card');
+    let visibleBooks = 0;
+
+    bookCards.forEach(card => {
+      const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
+      const author = card.querySelector('p.text-gray-300')?.textContent.toLowerCase() || '';
+      const genreElement = card.querySelector('[class*="bg-primary-500"]');
+      const genre = genreElement?.textContent.toLowerCase() || '';
+      const ratingElement = card.querySelector('.text-white');
+      const rating = parseFloat((ratingElement as HTMLElement)?.textContent || '0') || 0;
+      const availableElement = card.querySelector('.text-green-400');
+      const availableText = availableElement?.textContent || '';
+      const available = parseInt(availableText.split('/')[0]) || 0;
+
+      // Search filter
+      const matchesSearch = searchTerm === '' || 
+        title.includes(searchTerm) || 
+        author.includes(searchTerm) || 
+        genre.includes(searchTerm);
+
+      // Genre filter
+      const matchesGenre = !selectedGenre || genre.includes(selectedGenre.toLowerCase());
+
+      // Rating filter
+      const matchesRating = rating >= minRating;
+
+      // Availability filter
+      const matchesAvailability = !onlyAvailable || available > 0;
+
+      // Show/hide book
+      if (matchesSearch && matchesGenre && matchesRating && matchesAvailability) {
+        (card as HTMLElement).style.display = 'block';
+        visibleBooks++;
+      } else {
+        (card as HTMLElement).style.display = 'none';
+      }
+    });
+
+    // Show "no results" message if needed
+    const noResultsMsg = document.getElementById('noResults');
+    if (visibleBooks === 0) {
+      if (!noResultsMsg) {
+        const msg = document.createElement('div');
+        msg.id = 'noResults';
+        msg.className = 'col-span-full text-center py-12';
+        msg.innerHTML = `
+          <div class="glass-card p-8 max-w-md mx-auto">
+            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            <h3 class="text-xl font-semibold text-white mb-2">No se encontraron libros</h3>
+            <p class="text-gray-300">Intenta ajustar tus filtros o términos de búsqueda</p>
+          </div>
+        `;
+        (document.querySelector('.grid') as HTMLElement).appendChild(msg);
+      }
+    } else if (noResultsMsg) {
+      noResultsMsg.remove();
+    }
+  }
+
+  // Initialize with all books visible
+  filterBooks();
+</script>

@@ -1,0 +1,50 @@
+---
+import { Clock, Shield, Zap, Heart } from 'lucide-astro';
+---
+
+<section class="py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-4 drop-shadow-lg">
+        ¿Por Qué Elegirnos?
+      </h2>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        Ofrecemos una experiencia de lectura digital incomparable con características que marcan la diferencia
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="glass-card p-8 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-transform duration-300">
+          <Clock size={40} class="text-white" />
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Disponibilidad 24/7</h3>
+        <p class="text-gray-300">Accede a nuestra biblioteca en cualquier momento, desde cualquier lugar</p>
+      </div>
+      
+      <div class="glass-card p-8 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-transform duration-300">
+          <Shield size={40} class="text-white" />
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Seguridad Garantizada</h3>
+        <p class="text-gray-300">Tus datos y reservas están protegidos con la más alta seguridad</p>
+      </div>
+      
+      <div class="glass-card p-8 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-transform duration-300">
+          <Zap size={40} class="text-white" />
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Reservas Instantáneas</h3>
+        <p class="text-gray-300">Obtén tu libro en segundos con nuestro sistema de reserva ultrarrápido</p>
+      </div>
+      
+      <div class="glass-card p-8 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-20 h-20 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 transition-transform duration-300">
+          <Heart size={40} class="text-white" />
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Comunidad Activa</h3>
+        <p class="text-gray-300">Únete a una comunidad vibrante de lectores apasionados como tú</p>
+      </div>
+    </div>
+  </div>
+</section>

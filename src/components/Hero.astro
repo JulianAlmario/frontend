@@ -1,0 +1,55 @@
+---
+import { BookOpen, Search, Users, Star } from 'lucide-astro';
+---
+
+<section class="relative py-20 px-4 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+  
+  <div class="relative max-w-7xl mx-auto text-center">
+    <div class="mb-8">
+      <h1 class="text-6xl md:text-8xl font-display font-bold text-white mb-6 animate-fade-in drop-shadow-lg">
+        Biblioteca Digital
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-slide-up">
+        Descubre un mundo de conocimiento a tu alcance. Reserva libros, explora géneros y conecta con una comunidad de lectores apasionados.
+      </p>
+    </div>
+    
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 animate-bounce-in">
+      <button class="glass-card text-lg px-8 py-4 text-white hover:bg-white/20 transition-all duration-300">
+        <BookOpen class="inline-block mr-2" size={24} />
+        Explorar Libros
+      </button>
+      <button class="glass-card text-lg px-8 py-4 text-white hover:bg-white/20 transition-all duration-300">
+        <Users class="inline-block mr-2" size={24} />
+        Unirse a la Comunidad
+      </button>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+      <div class="glass-card p-8 text-center floating-animation">
+        <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+          <BookOpen size={32} class="text-white" />
+        </div>
+        <h3 class="text-2xl font-semibold text-white mb-2">Miles de Libros</h3>
+        <p class="text-gray-300">Explora nuestra vasta colección de títulos en todos los géneros imaginables</p>
+      </div>
+      
+      <div class="glass-card p-8 text-center floating-animation" style="animation-delay: 0.5s;">
+        <div class="w-16 h-16 bg-gradient-to-r from-secondary-500 to-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Search size={32} class="text-white" />
+        </div>
+        <h3 class="text-2xl font-semibold text-white mb-2">Búsqueda Inteligente</h3>
+        <p class="text-gray-300">Encuentra exactamente lo que buscas con nuestro sistema de búsqueda avanzado</p>
+      </div>
+      
+      <div class="glass-card p-8 text-center floating-animation" style="animation-delay: 1s;">
+        <div class="w-16 h-16 bg-gradient-to-r from-accent-500 to-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+          <Star size={32} class="text-white" />
+        </div>
+        <h3 class="text-2xl font-semibold text-white mb-2">Reseñas y Valoraciones</h3>
+        <p class="text-gray-300">Descubre lo que otros lectores piensan antes de hacer tu reserva</p>
+      </div>
+    </div>
+  </div>
+</section>
