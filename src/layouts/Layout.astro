@@ -1,13 +1,17 @@
 ---
 import Navigation from '../components/Navigation.astro';
+import NavigationOptimized from '../components/NavigationOptimized.astro';
 import Footer from '../components/Footer.astro';
+import PageTransition from '../components/PageTransition.astro';
+import { ClientRouter } from 'astro:transitions';
 
 export interface Props {
   title?: string;
   description?: string;
+  useOptimizedNav?: boolean;
 }
 
-const { title = "Biblioteca Digital", description = "Descubre, reserva y disfruta de nuestros libros" } = Astro.props;
+const { title = "Biblioteca Digital", description = "Descubre, reserva y disfruta de nuestros libros", useOptimizedNav = true } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -19,16 +23,53 @@ const { title = "Biblioteca Digital", description = "Descubre, reserva y disfrut
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <ClientRouter fallback="swap" />
+    
+    <!-- Prefetch critical resources -->
+    <link rel="prefetch" href="/api/libros/buscar/filtros" as="fetch" crossorigin="anonymous" />
+    <link rel="modulepreload" href="/src/stores/books.ts" />
+    
+    <!-- Performance optimizations -->
+    <meta name="view-transition" content="same-origin" />
   </head>
   <body>
-    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div class="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-      <Navigation />
-      <main class="pt-16">
-        <slot />
-      </main>
-      <Footer />
-    </div>
+    <PageTransition>
+      <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <div class="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+        
+        {useOptimizedNav ? <NavigationOptimized /> : <Navigation />}
+        
+        <main class="pt-16" transition:animate="fade">
+          <slot />
+        </main>
+        <Footer />
+      </div>
+    </PageTransition>
+    
+    <script is:inline>
+      // Performance monitoring (client-side only)
+      if (typeof window !== 'undefined') {
+        // Initialize performance monitoring
+        document.addEventListener('astro:before-swap', () => {
+          console.log('🚀 Navigation started');
+          sessionStorage.setItem('navigationStart', Date.now().toString());
+        });
+        
+        document.addEventListener('astro:page-load', () => {
+          const start = sessionStorage.getItem('navigationStart');
+          if (start) {
+            const duration = Date.now() - parseInt(start);
+            console.log(`⚡ Navigation completed in ${duration}ms`);
+            sessionStorage.removeItem('navigationStart');
+            
+            // Report slow navigations
+            if (duration > 1000) {
+              console.warn(`⚠️ Slow navigation detected: ${duration}ms`);
+            }
+          }
+        });
+      }
+    </script>
   </body>
 </html>
 

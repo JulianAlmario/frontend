@@ -1,0 +1,40 @@
+---
+export interface Props {
+  size?: 'sm' | 'md' | 'lg';
+  text?: string;
+  fullScreen?: boolean;
+}
+
+const { size = 'md', text = 'Cargando...', fullScreen = false } = Astro.props;
+
+const sizeClasses = {
+  sm: 'w-6 h-6',
+  md: 'w-10 h-10',
+  lg: 'w-16 h-16'
+};
+---
+
+<div class:list={[
+  'flex items-center justify-center',
+  fullScreen ? 'fixed inset-0 bg-white/80 backdrop-blur-sm z-50' : 'min-h-[200px]'
+]}>
+  <div class="flex flex-col items-center space-y-4">
+    <div class:list={[
+      'animate-spin rounded-full border-4 border-blue-200 border-t-blue-600',
+      sizeClasses[size]
+    ]}></div>
+    {text && <p class="text-gray-600 text-sm font-medium">{text}</p>}
+  </div>
+</div>
+
+<style>
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+</style>

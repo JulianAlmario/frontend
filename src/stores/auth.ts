@@ -1,10 +1,5 @@
 // Simple auth state management for Astro
-export interface User {
-  _id: string;
-  nombre: string;
-  correo: string;
-  rol: string[];
-}
+import type { User } from '../services';
 
 export class AuthStore {
   private static instance: AuthStore;

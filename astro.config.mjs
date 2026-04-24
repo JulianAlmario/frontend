@@ -9,5 +9,13 @@ export default defineConfig({
   server: {
     port: 4321,
     host: true
+  },
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport'
+  },
+  build: {
+    inlineStylesheets: 'auto',
+    splitJavaScript: true
   }
 });

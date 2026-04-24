@@ -1,0 +1,115 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "Biblioteca Digital", description = "Descubre, reserva y disfruta de nuestros libros" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es" transition:animate="fade">
+  <head transition:persist>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ClientRouter fallback="swap" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/lexend.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <!-- Prefetch next pages -->
+    <link rel="prefetch" href="/" />
+    <link rel="prefetch" href="/libros" />
+    <link rel="prefetch" href="/login" />
+  </head>
+  <body>
+    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" transition:animate="fade">
+      <div class="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" transition:persist></div>
+      <Navigation transition:persist />
+      <main class="pt-16" transition:animate="fade">
+        <slot />
+      </main>
+      <Footer transition:persist />
+    </div>
+    
+    <!-- Loading indicator -->
+    <div id="page-loading" class="fixed top-0 left-0 w-full h-1 bg-transparent z-50">
+      <div class="h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-300" style="width: 0%"></div>
+    </div>
+    
+    <script>
+      // Loading indicator functionality
+      let loadingTimeout: number;
+      
+      function showLoading() {
+        const loadingBar = document.querySelector('#page-loading > div') as HTMLElement;
+        if (loadingBar) {
+          loadingBar.style.width = '30%';
+          loadingTimeout = window.setTimeout(() => {
+            loadingBar.style.width = '80%';
+          }, 200);
+        }
+      }
+      
+      function hideLoading() {
+        const loadingBar = document.querySelector('#page-loading > div') as HTMLElement;
+        if (loadingBar) {
+          clearTimeout(loadingTimeout);
+          loadingBar.style.width = '100%';
+          setTimeout(() => {
+            loadingBar.style.width = '0%';
+          }, 300);
+        }
+      }
+      
+      // Listen for Astro page transitions
+      document.addEventListener('astro:before-preparation', showLoading);
+      document.addEventListener('astro:after-preparation', hideLoading);
+      
+      // Also handle regular navigation
+      window.addEventListener('beforeunload', showLoading);
+    </script>
+  </body>
+</html>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@300;400;500;600;700;800&display=swap');
+  
+  /* Optimized animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-10px); }
+  }
+  
+  /* View transition animations */
+  ::view-transition-old(root) {
+    animation: fadeOut 0.2s ease-out forwards;
+  }
+  
+  ::view-transition-new(root) {
+    animation: fadeIn 0.3s ease-in forwards;
+  }
+  
+  /* Fallback for browsers without view transitions */
+  [data-astro-transition-fallback="old"] {
+    animation: fadeOut 0.2s ease-out forwards;
+  }
+  
+  [data-astro-transition-fallback="new"] {
+    animation: fadeIn 0.3s ease-in forwards;
+  }
+</style>

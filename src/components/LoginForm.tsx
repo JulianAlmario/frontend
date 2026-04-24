@@ -1,4 +1,5 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
+import type {FormEvent} from 'react';
 import { apiService } from '../services/api';
 
 interface LoginFormProps {
