@@ -135,9 +135,6 @@ npm run preview
 4. Push a la branch (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## 📝 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## 🎨 Inspiración
 
